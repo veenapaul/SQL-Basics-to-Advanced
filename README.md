@@ -1,6 +1,8 @@
 # SQL-Basics-to-Advanced
 
 Database
+--------
+
 Create database
 
 Eg: 
