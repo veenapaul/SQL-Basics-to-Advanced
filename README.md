@@ -154,8 +154,10 @@ The following statements first insert some rows into the customer_groups table a
     TRUNCATE TABLE sales.customer_groups;
     
 The TRUNCATE TABLE is similar to the DELETE statement without a WHERE clause. However, the TRUNCATE statement executes faster and uses a fewer system and transaction log resources.
+
 TRUNCATE TABLE vs. DELETE
 -------------------------
+
 The TRUNCATE TABLE has the following advantages over the DELETE statement:
 1) Use less transaction log
 The DELETE statement removes rows one at a time and inserts an entry in the transaction log for each removed row. On the other hand, the TRUNCATE TABLE statement deletes the data by deallocating the data pages used to store the table data and inserts only the page deallocations in the transaction logs.
