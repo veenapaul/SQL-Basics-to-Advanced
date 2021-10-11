@@ -126,5 +126,6 @@
     <Build Include="Security\hr.sql" />
     <Build Include="Security\production.sql" />
     <Build Include="Security\sales.sql" />
+    <Build Include="dbo\Creating Database.sql" />
   </ItemGroup>
 </Project>
