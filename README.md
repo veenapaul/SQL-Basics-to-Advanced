@@ -3,20 +3,20 @@
 Database
 --------
 
-Create database
+**Create database**
 
 Eg: 
 
     CREATE DATABASE testDB;
 
-Drop DATABASE
+**Drop DATABASE**
 
 
     DROP database_name;
     
 Eg: DROP DATABASE testDB;
 
-Back up Database
+**Back up Database**
 
 
      BACKUP DATABASE database_name 
@@ -28,7 +28,9 @@ Eg:
      BACKUP DATABASE testDB
      TO DISK = 'D:\backups\testDB.bak';
 
-Differential Back up(only back up part of database that has changed after last back up)
+**Differential Back up**
+
+It only back up part of database that has changed after last back up
     
     BACKUP DATABASE database _name
     WITH DIFFERENTIAL;
@@ -41,7 +43,7 @@ Eg:
 Table
 ----- 
 
-Create table
+**Create table**
  
   
       CREATE table_name;
@@ -64,7 +66,7 @@ Creating table and inserting values
 	,'683572'
 	);
 
-Inserting multiple rows 
+**Inserting multiple rows**
 
 The following statement inserts multiple rows to the sales.promotions table:
 
@@ -95,7 +97,7 @@ The following statement inserts multiple rows to the sales.promotions table:
     );
 
 
-Alter table and add new column
+**Alter table and add new column**
 
     Alter  table_name
     Add column name
@@ -103,6 +105,14 @@ Alter table and add new column
 Eg: 
   
     ALTER TABLE Customers ADD Email VARCHAR(255);
+    
+ **Drop Table**
+ 
+   Drop table_name
+   
+Eg:   
+   
+   DROP TABLE Customers;
 
 SQL Server Identity
 -------------------
