@@ -108,7 +108,7 @@ Eg:
     
  **Drop Table**
  
-   Drop table_name
+   Drop TABLE table_name
    
 Eg:   
    
