@@ -130,7 +130,8 @@ IDENTITY (10,10)
 
 TRUNCATE TABLE statement AND DELETE 
 -----------------------------------
-
+Delete
+It can be used in 2 ways
 Sometimes, you want to delete all rows from a table. In this case, you typically use the DELETE statement without a WHERE clause.
 The following example creates a new table named customer_groups and inserts some rows into the table:
 
@@ -149,7 +150,14 @@ To delete all rows from the customer_groups table, you use the DELETE statement 
 
       DELETE FROM sales.customer_groups;
       
+      or 
+      
+To delete a specific row  from the customer_groups table  
+
+      DELETE FROM sales.customer_groups where groip name='Third Party';
+      
 Besides the DELETE FROM statement, you can use the TRUNCATE TABLE statement to delete all rows from a table.
+
 The following illustrates the syntax of the TRUNCATE TABLE statement:
 
     TRUNCATE TABLE [database_name.][schema_name.]table_name;
@@ -167,17 +175,23 @@ The following statements first insert some rows into the customer_groups table a
     
 The TRUNCATE TABLE is similar to the DELETE statement without a WHERE clause. However, the TRUNCATE statement executes faster and uses a fewer system and transaction log resources.
 
-TRUNCATE TABLE vs. DELETE
--------------------------
-
-The TRUNCATE TABLE has the following advantages over the DELETE statement:
-1) Use less transaction log
-The DELETE statement removes rows one at a time and inserts an entry in the transaction log for each removed row. On the other hand, the TRUNCATE TABLE statement deletes the data by deallocating the data pages used to store the table data and inserts only the page deallocations in the transaction logs.
-2) Use fewer locks
-When the DELETE statement is executed using a row lock, each row in the table is locked for removal. The TRUNCATE TABLE locks the table and pages, not each row.
-3) Identity reset
-If the table to be truncated has an identity column, the counter for that column is reset to the seed value when data is deleted by the TRUNCATE TABLE statement but not the DELETE statement.
-
+| **DELETE COMMAND** |  **TRUNCATE COMMAND** |
+| --- | --- |
+| Delete command is useful to delete all or specific rows from a table specified using a Where clause | The truncate command removes all rows of a table. We cannot use a Where clause in this. |
+| It is a DML command | It is a DDL command.  |
+| SQL Delete command places lock on each row requires to delete from a table.| SQL Truncate command places a table and page lock to remove all records.  |
+| Delete command logs entry for each deleted row in the transaction log..| The truncate command does not log entries for each deleted row in the transaction log.  |
+| Delete command is slower than the Truncate command.| It is faster than the delete command.  |                                                                  
+| It removes rows one at a time.| It removes all rows in a table by deallocating the pages that are used to store the table data  | 
+| It retains the identity and does not reset it to the seed value.| Truncate command reset the identity to its seed value. | 
+| It retains the identity and does not reset it to the seed value.| Truncate command reset the identity to its seed value. | 
+| It requires more transaction log space than the truncate command.| It requires less transaction log space than the delete command. | 
+| You require delete permission on a table to use this| You require Alter table permissions to truncate a table.| 
+| You can use the Delete statement with the indexed views.| You cannot use the truncate command with the indexed views.| 
+| Delete command retains the object statistics and allocated space.|Truncate deallocates all data pages of a table. Therefore, it removes all statistics and allocated space as well.| 
+ | Delete command can activate a trigger as well. Delete works on individual rows and delete the data. Therefore, it activates a trigger.|The truncate command cannot activate a trigger. The trigger is activated if any row modification takes place. In this command, SQL Server deallocates all pages, so it does not activate a trigger.
+ | Delete command removes the rows matched with the where clause. It also does not remove the columns, indexes, constraints, schema|The truncate command only removes all rows of a table. It does not remove the columns, indexes, constraints, and schema.| 
+ 
 SQL Server DROP TABLE
 ---------------------
 
@@ -293,6 +307,12 @@ The following statement updates a single column for all rows in the taxes table:
       SET updated_at = GETDATE();
       
 In this example, the statement changed the values in the updated_at column to the system date time returned by the GETDATE() function.
+
+Another eg:
+
+      UPDATE Customers
+      SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+      WHERE CustomerID = 1;
 
 Update multiple columns 
 -----------------------
