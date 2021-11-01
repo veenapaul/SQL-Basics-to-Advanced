@@ -46,13 +46,13 @@ Table
 **Create table**
  
   
-      CREATE table_name;
+      CREATE TABLE table_name;
 
 
 Creating table and inserting values
 
       CREATE TABLE Company (
-        Id CHAR(10) PRIMARY KEY
+         Id CHAR(10) PRIMARY KEY
 	,Countrty CHAR(15) NOT NULL
 	,Region CHAR(15) NOT NULL
 	,PIN INT NOT NULL
@@ -99,12 +99,13 @@ The following statement inserts multiple rows to the sales.promotions table:
 
 **Alter table and add new column**
 
-    Alter  table_name
+    ALTER TABLE table_name
     Add column name
     
 Eg: 
   
-    ALTER TABLE Customers ADD Email VARCHAR(255);
+    ALTER TABLE Customers 
+    ADD Email VARCHAR(255);
     
  **Drop Table**
  
