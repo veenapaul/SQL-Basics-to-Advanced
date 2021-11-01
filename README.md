@@ -330,6 +330,8 @@ The following statement increases the max local tax rate by 2% and the average l
 
 Primary keys and foreign keys are two types of constraints that can be used to enforce data integrity in SQL Server tables.
 
+A table typically has a column or combination of columns that contain values that uniquely identify each row in the table. This column, or columns, is called the primary key (PK) of the table and enforces the entity integrity of the table. Because primary key constraints guarantee unique data, they are frequently defined on an identity column.
+
 •A table can contain only one primary key constraint.
 
 •A primary key cannot exceed 16 columns and a total key length of 900 bytes.
