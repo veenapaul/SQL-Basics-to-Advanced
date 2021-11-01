@@ -12,7 +12,7 @@ Eg:
 **Drop DATABASE**
 
 
-    DROP database_name;
+    DROP DATABASE database_name;
     
 Eg: DROP DATABASE testDB;
 
