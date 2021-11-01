@@ -5,9 +5,9 @@ Database
 
 **Create database**
 
-Eg: 
-
-    CREATE DATABASE testDB;
+    CREATE DATABASE database_name
+    
+Eg: CREATE DATABASE testDB;
 
 **Drop DATABASE**
 
@@ -325,6 +325,47 @@ The following statement increases the max local tax rate by 2% and the average l
     WHERE
     max_local_tax_rate = 0.01;
     
+    
+**PRIMARY KEY AND FOREIGN KEY**
+
+Primary keys and foreign keys are two types of constraints that can be used to enforce data integrity in SQL Server tables.
+
+•A table can contain only one primary key constraint.
+
+•A primary key cannot exceed 16 columns and a total key length of 900 bytes.
+
+•If clustered or nonclustered is not specified for a primary key constraint, clustered is used if there no clustered index on the table.
+
+•All columns defined within a primary key constraint must be defined as not null. If nullability is not specified, all columns participating in a primary key constraint have their nullability set to not null.
+
+Create Primary Key
+
+    CREATE TABLE Persons (
+    ID int NOT NULL
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+    CONSTRAINT PK_Person PRIMARY KEY (ID)
+    );        
+
+   ALTER TABLE Persons
+   Add Constraint Pk_Persons PRIMARY KEY(ID);
+
+
+   ALTER TABLE Persons
+   DROP CONSTRAINT Pk_persons;
+ 
+ OR for multiple columns
+
+    CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT PK_Person PRIMARY KEY (ID,LastName)
+   );
+
+    
 To alter primary key
 --------------------
 For altering one primary key
@@ -349,6 +390,89 @@ To drop multiple PRIMARY KEY
 
   ALTER TABLE Persons
   DROP CONSTRAINT PK_Person PRIMARY KEY(ID, Last Name);
+  
+Foreign Key
+-----------
+A foreign key (FK) is a column or combination of columns that is used to establish and enforce a link between the data in two tables to control the data that can be stored in the foreign key table. In a foreign key reference, a link is created between two tables when the column or columns that hold the primary key value for one table are referenced by the column or columns in another table. This column becomes a foreign key in the second table.
+Unlike primary key constraints, creating a foreign key constraint does not automatically create a corresponding index. However, manually creating an index on a foreign key is often useful for the following reasons:
+
+•Foreign key columns are frequently used in join criteria when the data from related tables is combined in queries by matching the column or columns in the foreign key constraint of one table with the primary or unique key column or columns in the other table. An index enables the Database Engine to quickly find related data in the foreign key table. However, creating this index is not required. Data from two related tables can be combined even if no primary key or foreign key constraints are defined between the tables, but a foreign key relationship between two tables indicates that the two tables have been optimized to be combined in a query that uses the keys as its criteria.
+
+•Changes to primary key constraints are checked with foreign key constraints in related tables.
+
+To Create Foriegn Key
+--------------------
+
+    CREATE TABLE Orders (
+    OrderID int NOT NULL , 
+    OrderNumber int NOT NULL,
+    CONSTRAINT PK_Orders PRIMARY KEY (OrderID)
+    PersonID int FOREIGN KEY REFERENCES Persons(PersonID)
+    );
+
+    ALTER TABLE Orders
+    ADD CONSTRAINT Fk_PersonID
+    FOREIGN KEY (PersonID) REFERENCES Persons(ID);
+
+    ALTER Table Orders
+    DROP CONSTRAINT Fk_orders;
+
+                         OR for multiple coloumns
+			 
+    CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    CONSTRAINT FK_PersonOrder FOREIGN KEY (PersonID)
+    REFERENCES Persons(PersonID)
+    );
+
+
+UNIQUE KEY CONSTRAINT
+--------------------
+
+A table can have, only one primary key. If you want to enforce uniqueness on 2 or more columns, then we use unique key constraint.
+
+1. A table can have only one primary key, but more than one unique key
+2. Primary key does not allow nulls, where as unique key allows one null
+
+       alter table production.categories
+       add constraint category_name UNIQUE(category_name);
+
+To drop the constraint
+----------------------
+
+1. Right click the constraint and delete.
+
+Or
+
+2. Using a query
+
+       alter table production.categories
+    
+       DROP CONSTRAINT[category_name]
+
+
+Check constraint
+----------------
+
+    CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int CHECK (Age>=18)
+    );
+
+    CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255),
+    CONSTRAINT CHK_Person CHECK (Age>=18 AND City='Sandnes')
+    );
+    
 
 SQL Server Rename Table
 -----------------------
@@ -392,105 +516,8 @@ Second, type the new name of the table e.g., product_archive and press Enter:
  
 Primary Key and Foreign key
 --------------------------
-Primary Key
-
-    CREATE TABLE Persons (
-    ID int NOT NULL
-    LastName varchar(255) NOT NULL,
-    FirstName varchar(255),
-    Age int
-    CONSTRAINT PK_Person PRIMARY KEY (ID)
-    );        
-
-   ALTER TABLE Persons
-   Add Constraint Pk_Persons PRIMARY KEY(ID);
 
 
-   ALTER TABLE Persons
-   DROP CONSTRAINT Pk_persons;
- 
- OR for multiple columns
-
-    CREATE TABLE Persons (
-    ID int NOT NULL,
-    LastName varchar(255) NOT NULL,
-    FirstName varchar(255),
-    Age int,
-    CONSTRAINT PK_Person PRIMARY KEY (ID,LastName)
-   );
-
-Foreign Key
------------
-
-    CREATE TABLE Orders (
-    OrderID int NOT NULL , 
-    OrderNumber int NOT NULL,
-    CONSTRAINT PK_Orders PRIMARY KEY (OrderID)
-    PersonID int FOREIGN KEY REFERENCES Persons(PersonID)
-    );
-
-    ALTER TABLE Orders
-    ADD CONSTRAINT Fk_PersonID
-    FOREIGN KEY (PersonID) REFERENCES Persons(ID);
-
-    ALTER Table Orders
-    DROP CONSTRAINT Fk_orders;
-
-                         OR for multiple coloumns
-			 
-    CREATE TABLE Orders (
-    OrderID int NOT NULL,
-    OrderNumber int NOT NULL,
-    PersonID int,
-    PRIMARY KEY (OrderID),
-    CONSTRAINT FK_PersonOrder FOREIGN KEY (PersonID)
-    REFERENCES Persons(PersonID)
-    );
-
-
-UNIQUE KEY CONSTRAINT
---------------------
-
-A table can have, only one primary key. If you want to enforce uniqueness on 2 or more columns, then we use unique key constraint.
-
-1. A table can have only one primary key, but more than one unique key
-2. Primary key does not allow nulls, where as unique key allows one null
-
-   alter table production.categories
-    add constraint category_name UNIQUE(category_name);
-
-To drop the constraint
-----------------------
-
-1. Right click the constraint and delete.
-
-Or
-2. Using a query
-
-       alter table production.categories
-    
-       DROP CONSTRAINT[category_name]
-
-
-Check constraint
-----------------
-
-    CREATE TABLE Persons (
-    ID int NOT NULL,
-    LastName varchar(255) NOT NULL,
-    FirstName varchar(255),
-    Age int CHECK (Age>=18)
-    );
-
-    CREATE TABLE Persons (
-    ID int NOT NULL,
-    LastName varchar(255) NOT NULL,
-    FirstName varchar(255),
-    Age int,
-    City varchar(255),
-    CONSTRAINT CHK_Person CHECK (Age>=18 AND City='Sandnes')
-    );
-    
 Create Schema
 -------------
 
