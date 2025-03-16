@@ -120,7 +120,7 @@ SQL Server Identity
 
 To create an identity column for a table, you use the IDENTITY property as follows:
 
-    IDENTITY[(seed,increment)]
+    IDENTITY[(seed,increment)];
     
 In this syntax:
 •	The seed is the value of the first row loaded into the table.
