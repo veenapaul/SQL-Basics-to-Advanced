@@ -34,6 +34,7 @@ It only back up part of database that has changed after last back up
     
     BACKUP DATABASE database _name
     WITH DIFFERENTIAL;
+    
 Eg:
 
    BACKUP DATABASE testDB
